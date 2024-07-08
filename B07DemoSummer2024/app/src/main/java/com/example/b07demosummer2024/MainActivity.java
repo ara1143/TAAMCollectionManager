@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
@@ -26,15 +27,44 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
+        db = FirebaseDatabase.getInstance("https://taamcollectionmanager-default-rtdb.firebaseio.com/");
         DatabaseReference myRef = db.getReference("testDemo");
 
-//        myRef.setValue("B07 Demo!");
-        myRef.child("movies").setValue("B07 Demo!");
+        //users and collections nodes reference
+        DatabaseReference usersRef = db.getReference("users");
+        DatabaseReference collectionsRef = db.getReference("collections");
+
+        //test
+        //addUser(usersRef, "user1", "password1");
+        //addCollection(collectionsRef, "Collection 1", "123", "Art", "Renaissance", "A beautiful piece of art from the Renaissance period.", "https://example.com/pic1.jpg");
 
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
         }
+    }
+
+    private void addUser(DatabaseReference usersRef, String username, String password) {
+        //push user data to the users node
+        DatabaseReference newUserRef = usersRef.push();
+        newUserRef.setValue(new User(username, password), (error, ref) -> {
+            if (error != null) {
+                Log.e("Firebase", "Error adding user: " + error.getMessage());
+            } else {
+                Log.d("Firebase", "User added successfully!");
+            }
+        });
+    }
+
+    private void addCollection(DatabaseReference collectionsRef, String name, String lotNumber, String category, String period, String description, String mediaUrl) {
+        // Push collection data to the collections node
+        DatabaseReference newCollectionRef = collectionsRef.push();
+        newCollectionRef.setValue(new Collection(name, lotNumber, category, period, description, mediaUrl), (error, ref) -> {
+            if (error != null) {
+                Log.e("Firebase", "Error adding collection: " + error.getMessage());
+            } else {
+                Log.d("Firebase", "Collection added successfully!");
+            }
+        });
     }
 
     private void loadFragment(Fragment fragment) {
