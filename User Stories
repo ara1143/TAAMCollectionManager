@@ -3,21 +3,23 @@
 	1.2. As a user I want to see all collections listed item by item in the middle of the main page so that I can easily browse through all available collections. (2)
 	1.3. As a user I want to select items using checkboxes and click on a "View" button so that I can view information about specific items from the collection. (3)
 	1.4. As a user I want to click on a "Search" button so that I can enter search criteria to find items within the collections. (1)
-	1.5.
+	1.5. As a user I want to click the next button so that I can scroll through items.
 2. Admin
-	2.1
-	2.2
-	2.3
-	2.4
-	2.5
-	2.6
-	2.7
+	2.1 As an admin I want to input a username and password and click on the ‘Log in’ so that I can see the main screen with the additional functionalities of adding, removing and generating reports about the collection, as well as revert to the Viewer screen.
+	2.2 As an admin I want to click on the ‘View’ button so that I can see information about specified items.
+	2.3 As an admin I want to click on the ‘Search’ button so that I can find an item in the collection using specific information about them.
+	2.4  As an admin I want to click on the ‘Add’ button so that I can enter information about a new item to include in the collection.
+	2.5 As an admin I want to click on the ‘Remove’ button so that I can remove an item from the collection after I verify the item I want removed.
+	2.6 As an admin I want to click the ‘Report’ button so that I can have a PDF file report on a specific portion of the collection.
+	2.7 As an admin I want to click on the ‘Back’ button so that I can return to the Viewer version of the main screen.  
 3. ‘Add’ function
 	3.1 As an admin, I want to click the “Add” button to add a new item into the system with its corresponding information: Lot Number, Name, Category, Period, Description, and Picture/Video
 	3.2 As an admin I want to click the “Submit” button for the information about my new item to be accepted by the system
 4. ‘Search’ function
-	4.1
-	4.2
+	4.1 As a user I want to click a “Search” button to be prompted to input the Lot number, Name, Category or Period of an item I want to search for.
+	4.2 As a user a I want to click a “Result” button I want to see the results based on my search criteria. 
+	4.3 As a user I want to click a “View” button that displays an item I have selected in a pop up screen.
 5. ‘Remove’ function
+	5.1 As a User I want to click on a “Remove” button to remove an item I have selected or have the system tell me to select an item I want to remove.
 6. ‘Report’ function
-	6.1
+	6.1 As an Admin, I want to click on a “Report” button to generate a printable PDF file of some or all  items  I searched for using their lot number, name, category or Period and have the report contain all their information or just the description and picture.
