@@ -102,7 +102,7 @@
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="26dp"
         android:layout_marginEnd="4dp"
         android:text="submit"
         app:layout_constraintEnd_toEndOf="parent"
@@ -274,6 +274,18 @@
         android:textColor="#673AB7"
         android:textColorHighlight="#673AB7"
         android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="41dp"
+        android:text="Reports can be found in Downloads Folder of Device"
+        android:textColorLink="#716D74"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
