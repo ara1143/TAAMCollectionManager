@@ -65,10 +65,34 @@ public class GenerateReport {
         });
     }
 
+    public void generateReportByName(String name) {
+        collectionsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Collection> collections = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Collection collection = snapshot.getValue(Collection.class);
+                    if (collection != null) {
+                        Log.d("GenerateReport", "Fetched collection: " + collection.name);
+                        if (collection.name.equals(name)) {
+                            collections.add(collection);
+                        }
+                    }
+                }
+                createPdf(name, collections);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("GenerateReport", "Error fetching data", databaseError.toException());
+            }
+        });
+    }
+
 
     private void createPdf(String lotNumber, List<Collection> collections) {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-        File pdfFile = new File(pdfPath, "report_by_lot_number.pdf");
+        File pdfFile = new File(pdfPath, "report.pdf");
 
         ExecutorService executorService = Executors.newFixedThreadPool(4);
 
@@ -77,7 +101,7 @@ public class GenerateReport {
             PdfDocument pdfDocument = new PdfDocument(writer);
             Document document = new Document(pdfDocument);
 
-            document.add(new Paragraph("Report for Lot Number: " + lotNumber));
+            document.add(new Paragraph("Report for (Lot/name/period/category): " + lotNumber));
             document.add(new Paragraph(" "));
 
             for (Collection collection : collections) {
