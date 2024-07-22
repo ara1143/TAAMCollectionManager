@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ReportActivity extends AppCompatActivity {
 
@@ -30,13 +28,10 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private void generateReportByLotNumber(String lotNumber) {
-        // Mock data for testing
-        List<Collection> collections = new ArrayList<>();
-        collections.add(new Collection("Collection 1", "123", "Art", "Renaissance", "A beautiful piece of art from the Renaissance period.", "https://example.com/pic1.jpg"));
-        collections.add(new Collection("Collection 2", "456", "Sculpture", "Modern", "A modern sculpture made from recycled materials.", "https://example.com/pic2.jpg"));
-
         GenerateReport reportGenerator = new GenerateReport();
-        reportGenerator.generateReportByLotNumber(lotNumber, collections);
+        reportGenerator.generateReportByLotNumber(lotNumber);
     }
 }
+
+
 

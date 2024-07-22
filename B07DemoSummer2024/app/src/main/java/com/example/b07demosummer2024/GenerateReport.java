@@ -1,21 +1,76 @@
 package com.example.b07demosummer2024;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
 
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 
 public class GenerateReport {
 
-    public void generateReportByLotNumber(String lotNumber, List<Collection> collections) {
+    private FirebaseDatabase db;
+    private DatabaseReference collectionsRef;
+
+    public GenerateReport() {
+        db = FirebaseDatabase.getInstance("https://taamcollectionmanager-default-rtdb.firebaseio.com/");
+        collectionsRef = db.getReference("collections");
+    }
+
+    public void generateReportByLotNumber(String lotNumber) {
+        collectionsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Collection> collections = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Collection collection = snapshot.getValue(Collection.class);
+                    if (collection != null) {
+                        Log.d("GenerateReport", "Fetched collection: " + collection.name);
+                        if (collection.lotNumber.equals(lotNumber)) {
+                            collections.add(collection);
+                        }
+                    }
+                }
+                createPdf(lotNumber, collections);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("GenerateReport", "Error fetching data", databaseError.toException());
+            }
+        });
+    }
+
+
+    private void createPdf(String lotNumber, List<Collection> collections) {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
         File pdfFile = new File(pdfPath, "report_by_lot_number.pdf");
+
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
 
         try {
             PdfWriter writer = new PdfWriter(pdfFile);
@@ -26,14 +81,38 @@ public class GenerateReport {
             document.add(new Paragraph(" "));
 
             for (Collection collection : collections) {
-                if (collection.lotNumber.equals(lotNumber)) {
-                    document.add(new Paragraph("Name: " + collection.name));
-                    document.add(new Paragraph("Lot Number: " + collection.lotNumber));
-                    document.add(new Paragraph("Category: " + collection.category));
-                    document.add(new Paragraph("Period: " + collection.period));
-                    document.add(new Paragraph("Description: " + collection.description));
-                    document.add(new Paragraph("Media URL: " + collection.mediaUrl));
-                    document.add(new Paragraph(" "));
+                Log.d("GenerateReport", "Adding collection to PDF: " + collection.name);
+                document.add(new Paragraph("Name: " + collection.name));
+                document.add(new Paragraph("Lot Number: " + collection.lotNumber));
+                document.add(new Paragraph("Category: " + collection.category));
+                document.add(new Paragraph("Period: " + collection.period));
+                document.add(new Paragraph("Description: " + collection.description));
+                document.add(new Paragraph(" "));
+
+                if (collection.mediaUrl != null && !collection.mediaUrl.isEmpty()) {
+                    Future<Bitmap> future = executorService.submit(new Callable<Bitmap>() {
+                        @Override
+                        public Bitmap call() {
+                            try {
+                                return Picasso.get().load(collection.mediaUrl).get();
+                            } catch (IOException e) {
+                                Log.e("GenerateReport", "Error loading image from URL", e);
+                                return null;
+                            }
+                        }
+                    });
+
+                    try {
+                        Bitmap bitmap = future.get();
+                        if (bitmap != null) {
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                            Image img = new Image(ImageDataFactory.create(baos.toByteArray()));
+                            document.add(img);
+                        }
+                    } catch (InterruptedException | ExecutionException e) {
+                        Log.e("GenerateReport", "Error processing image future", e);
+                    }
                 }
             }
 
@@ -42,6 +121,8 @@ public class GenerateReport {
 
         } catch (IOException e) {
             Log.e("GenerateReport", "Error generating PDF", e);
+        } finally {
+            executorService.shutdown();
         }
     }
 }

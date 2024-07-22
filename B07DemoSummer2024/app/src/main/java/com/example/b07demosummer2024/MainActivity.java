@@ -34,10 +34,6 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference usersRef = db.getReference("users");
         DatabaseReference collectionsRef = db.getReference("collections");
 
-        //test
-        //addUser(usersRef, "user1", "password1");
-        //addCollection(collectionsRef, "Collection 1", "123", "Art", "Renaissance", "A beautiful piece of art from the Renaissance period.", "https://example.com/pic1.jpg");
-
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
         }

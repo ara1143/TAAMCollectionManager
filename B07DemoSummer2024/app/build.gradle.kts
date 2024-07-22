@@ -31,6 +31,9 @@ android {
 
 dependencies {
     implementation(libs.itext7.core)
+    implementation(libs.universal.image.loader)
+    implementation(libs.picasso)
+    implementation(libs.layout)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
