@@ -14,12 +14,12 @@ import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
+import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
-
     FirebaseDatabase db;
 
     @Override
@@ -33,10 +33,6 @@ public class MainActivity extends AppCompatActivity {
         //users and collections nodes reference
         DatabaseReference usersRef = db.getReference("users");
         DatabaseReference collectionsRef = db.getReference("collections");
-
-        //test
-        //addUser(usersRef, "user1", "password1");
-        //addCollection(collectionsRef, "Collection 1", "123", "Art", "Renaissance", "A beautiful piece of art from the Renaissance period.", "https://example.com/pic1.jpg");
 
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
