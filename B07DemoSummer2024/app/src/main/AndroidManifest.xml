@@ -35,7 +35,7 @@
             android:name=".Activity2"
             android:exported="false" />
         <activity
-            android:name=".ReportActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
