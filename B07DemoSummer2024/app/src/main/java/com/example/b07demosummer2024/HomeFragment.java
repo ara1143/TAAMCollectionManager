@@ -50,6 +50,23 @@ public class HomeFragment extends Fragment {
             recyclerView.setAdapter(recyclerAdapter);
         }
 
+        Button adminButton = view.findViewById(R.id.button);
+        adminButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to AdminFragment
+                AdminFragment adminFragment = AdminFragment.newInstance(collectionList);
+                loadFragment(adminFragment);
+            }
+        });
+
         return view;
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
