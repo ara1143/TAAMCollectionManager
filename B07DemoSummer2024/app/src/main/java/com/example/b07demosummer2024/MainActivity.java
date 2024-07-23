@@ -3,6 +3,7 @@ package com.example.b07demosummer2024;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,11 +17,17 @@ import android.view.View;
 import android.content.Intent;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     FirebaseDatabase db;
+    ArrayList<Collection> collectionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,37 +35,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = FirebaseDatabase.getInstance("https://taamcollectionmanager-default-rtdb.firebaseio.com/");
-        DatabaseReference myRef = db.getReference("testDemo");
-
-        //users and collections nodes reference
-        DatabaseReference usersRef = db.getReference("users");
         DatabaseReference collectionsRef = db.getReference("collections");
 
-        if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
-        }
-    }
+        collectionList = new ArrayList<>();
+        collectionsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                collectionList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Collection collection = dataSnapshot.getValue(Collection.class);
+                    collectionList.add(collection);
+                }
 
-    private void addUser(DatabaseReference usersRef, String username, String password) {
-        //push user data to the users node
-        DatabaseReference newUserRef = usersRef.push();
-        newUserRef.setValue(new User(username, password), (error, ref) -> {
-            if (error != null) {
-                Log.e("Firebase", "Error adding user: " + error.getMessage());
-            } else {
-                Log.d("Firebase", "User added successfully!");
+                // Only load the HomeFragment if it's not already loaded
+                if (savedInstanceState == null) {
+                    HomeFragment homeFragment = HomeFragment.newInstance(collectionList);
+                    loadFragment(homeFragment);
+                }
             }
-        });
-    }
 
-    private void addCollection(DatabaseReference collectionsRef, String name, String lotNumber, String category, String period, String description, String mediaUrl) {
-        // Push collection data to the collections node
-        DatabaseReference newCollectionRef = collectionsRef.push();
-        newCollectionRef.setValue(new Collection(name, lotNumber, category, period, description, mediaUrl), (error, ref) -> {
-            if (error != null) {
-                Log.e("Firebase", "Error adding collection: " + error.getMessage());
-            } else {
-                Log.d("Firebase", "Collection added successfully!");
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error fetching data: " + error.getMessage());
             }
         });
     }

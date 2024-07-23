@@ -41,10 +41,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.textViewTitle);
-            textViewAuthor = itemView.findViewById(R.id.textViewAuthor);
-            textViewGenre = itemView.findViewById(R.id.textViewGenre);
-            textViewDescription = itemView.findViewById(R.id.textViewDescription);
+            textViewTitle = itemView.findViewById(R.id.textViewName);
+            textViewAuthor = itemView.findViewById(R.id.textViewCategory);
+            textViewGenre = itemView.findViewById(R.id.textViewPeriod);
+            textViewDescription = itemView.findViewById(R.id.textViewLot);
         }
     }
 }
