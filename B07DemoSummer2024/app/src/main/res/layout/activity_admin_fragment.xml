@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/viewButton"
         android:layout_width="89dp"
         android:layout_height="48dp"
         android:layout_marginStart="25dp"
