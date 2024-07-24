@@ -55,6 +55,16 @@ public class AdminFragment extends Fragment {
             }
         });
 
+        Button backButton = view.findViewById(R.id.button15);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to GenerateReportFragment
+                HomeFragment homeFragment = HomeFragment.newInstance(collectionList);
+                loadFragment(homeFragment);
+            }
+        });
+
         return view;
     }
 
