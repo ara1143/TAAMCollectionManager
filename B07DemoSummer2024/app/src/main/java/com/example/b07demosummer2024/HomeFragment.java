@@ -57,8 +57,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Navigate to AdminFragment
-                AdminFragment adminFragment = AdminFragment.newInstance(collectionList);
-                loadFragment(adminFragment);
+//                AdminFragment adminFragment = AdminFragment.newInstance(collectionList);
+//                loadFragment(adminFragment);
+                loadFragment(new LoginFragment());
             }
         });
 
