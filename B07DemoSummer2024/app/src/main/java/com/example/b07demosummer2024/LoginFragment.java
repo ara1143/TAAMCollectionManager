@@ -69,8 +69,10 @@ public class LoginFragment extends Fragment {
                     String password1 = data.child("password").getValue(String.class);
                     if (username1.equals(username) && password1.equals(password)) {
                         Toast.makeText(getContext(), "You are an admin (need to connect to Admin Fragment)!", Toast.LENGTH_SHORT).show();
-                        // Fragment adminFragment = new AdminFragment();
-                        // loadFragment(adminFragment);
+
+                        // AdminFragment adminFragment = AdminFragment.newInstance(collectionList);
+                        AdminFragment adminFragment = new AdminFragment();
+                        loadFragment(adminFragment);
                         // need to connect to AdminFragment
                         return;
                     }
