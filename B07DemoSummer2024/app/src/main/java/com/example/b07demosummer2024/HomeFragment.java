@@ -59,7 +59,8 @@ public class HomeFragment extends Fragment {
                 // Navigate to AdminFragment
 //                AdminFragment adminFragment = AdminFragment.newInstance(collectionList);
 //                loadFragment(adminFragment);
-                loadFragment(new LoginFragment());
+                // loadFragment(new LoginFragment());
+                loadFragment(new LoginView());
             }
         });
 
