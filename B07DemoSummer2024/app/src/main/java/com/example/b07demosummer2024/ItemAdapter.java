@@ -47,4 +47,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             textViewDescription = itemView.findViewById(R.id.textViewLot);
         }
     }
+
+
 }

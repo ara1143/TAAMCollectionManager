@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectedCollectionsAdapter extends RecyclerView.Adapter<SelectedCollectionsAdapter.MyViewHolder> {
@@ -82,6 +83,7 @@ public class SelectedCollectionsAdapter extends RecyclerView.Adapter<SelectedCol
             checkBox = view.findViewById(R.id.checkBox);
         }
     }
+
 }
 
 
