@@ -37,6 +37,8 @@ public class LoginView extends Fragment {
         return view;
     }
 
+    // hello world testing
+
     private void loginUser() {
         presenter.checkDB(insertUsername.getText().toString(), insertPassword.getText().toString());
     }

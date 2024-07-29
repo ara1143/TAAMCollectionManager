@@ -12,6 +12,8 @@ public class LoginPresenter {
         this.view = view;
     }
 
+    // hello world testing
+
     public void checkDB(String username, String password) {
         if (username.equals("") || password.equals("")) {
             view.authFaliure();

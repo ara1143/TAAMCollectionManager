@@ -22,6 +22,8 @@ public class LoginModel {
         usersRef = db.getReference("users");
     }
 
+    // hello world testing
+
     public void checkAuth(LoginPresenter presenter, String username, String password) {
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
