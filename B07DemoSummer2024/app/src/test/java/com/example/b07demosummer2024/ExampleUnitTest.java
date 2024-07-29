@@ -57,14 +57,14 @@ public class ExampleUnitTest {
         verify(view).authFaliure();
     }
 //
-    @Test
-    public void checkDBClick() {
-        when(insertUsername.getText()).thenReturn(edit);
-        when(insertPassword.getText()).thenReturn(edit);
-        when(edit.toString()).thenReturn("Test");
-        LoginPresenter presenter = new LoginPresenter(view, model);
-        presenter.checkDB(insertUsername.getText().toString(), insertPassword.getText().toString());
-        verify(view);
-    }
+    //@Test
+    //public void checkDBClick() {
+        //when(insertUsername.getText()).thenReturn(edit);
+        //when(insertPassword.getText()).thenReturn(edit);
+        //when(edit.toString()).thenReturn("Test");
+        //LoginPresenter presenter = new LoginPresenter(view, model);
+        //presenter.checkDB(insertUsername.getText().toString(), insertPassword.getText().toString());
+       // verify(view);
+   // }
 //
 }

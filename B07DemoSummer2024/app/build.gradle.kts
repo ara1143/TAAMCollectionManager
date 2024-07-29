@@ -39,9 +39,11 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)
-    testImplementation(libs.mockito.all)
+    testImplementation(libs.mockk)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(libs.mockito.all)
+    androidTestImplementation(libs.mockk)
+    testImplementation(libs.mockito.core)
+
 }
