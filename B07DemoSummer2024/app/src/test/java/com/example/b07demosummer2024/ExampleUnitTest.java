@@ -3,9 +3,11 @@ package com.example.b07demosummer2024;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,25 +48,22 @@ public class ExampleUnitTest {
     @Test
     public void checkValidCredentials() {
         LoginPresenter presenter = new LoginPresenter(view, model);
-        presenter.checkDB("user1","password1");
+        doAnswer(invocation -> {
+            presenter.authResult(true);
+            return null;
+        }).when(model).checkAuth(presenter, "user1", "password1");
+        presenter.checkDB("user1", "password1");
         verify(view).authSucess();
     }
 
     @Test
     public void checkInvalidCredentials() {
         LoginPresenter presenter = new LoginPresenter(view, model);
-        presenter.checkDB("notcorrectusername","notcorrectpassword");
+        doAnswer(invocation -> {
+            presenter.authResult(false);
+            return null;
+        }).when(model).checkAuth(presenter, "user12", "password1");
+        presenter.checkDB("user12", "password1");
         verify(view).authFaliure();
     }
-//
-    //@Test
-    //public void checkDBClick() {
-        //when(insertUsername.getText()).thenReturn(edit);
-        //when(insertPassword.getText()).thenReturn(edit);
-        //when(edit.toString()).thenReturn("Test");
-        //LoginPresenter presenter = new LoginPresenter(view, model);
-        //presenter.checkDB(insertUsername.getText().toString(), insertPassword.getText().toString());
-       // verify(view);
-   // }
-//
 }
