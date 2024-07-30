@@ -48,7 +48,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             textViewCategory = itemView.findViewById(R.id.textViewCategory);
             textViewPeriod = itemView.findViewById(R.id.textViewPeriod);
             textViewDescription = itemView.findViewById(R.id.textViewDescription);
-            textViewMediaUrl = itemView.findViewById(R.id.textViewMediaUrl);
+            //textViewMediaUrl = itemView.findViewById(R.id.textViewMediaUrl);
         }
     }
 }
