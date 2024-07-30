@@ -1,75 +1,53 @@
 package com.example.b07demosummer2024;
+
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class ReportActivity extends AppCompatActivity {
-    //report by lot #
+public class GenerateReportFragment extends Fragment {
+
     private EditText editTextLotNumber;
     private Button btnGenerateLotReport;
-
-    //report by name
     private EditText editTextName;
     private Button btnGenerateNameReport;
-
-    //report by category
     private EditText editTextCategory;
     private Button btnGenerateCategoryReport;
-
-    //report by category
     private EditText editTextPeriod;
     private Button btnGeneratePeriodReport;
-
-    //report by category picture and description only
     private EditText editTextCategoryPD;
     private Button btnGenerateCategoryReportPD;
-
-    //report by period picture and description only
     private EditText editTextPeriodPD;
     private Button btnGeneratePeriodReportPD;
-
-    //report for all collections
     private Button btnGenerateReport;
-
-    //report for all collections picture and description only
     private Button btnGenerateReportPD;
 
+    public static GenerateReportFragment newInstance() {
+        return new GenerateReportFragment();
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_generate_report);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_generate_report, container, false);
 
-        //report by lot #
-        editTextLotNumber = findViewById(R.id.editTextNumber);
-        btnGenerateLotReport = findViewById(R.id.button3);
-
-        //report by name
-        editTextName = findViewById(R.id.editTextText2);
-        btnGenerateNameReport = findViewById(R.id.button5);
-
-        //report by Category
-        editTextCategory = findViewById(R.id.editTextText3);
-        btnGenerateCategoryReport = findViewById(R.id.button7);
-
-        //report by Category (picture and description only)
-        editTextCategoryPD = findViewById(R.id.editTextText9);
-        btnGenerateCategoryReportPD = findViewById(R.id.button6);
-
-        //report by Period
-        editTextPeriod = findViewById(R.id.editTextText10);
-        btnGeneratePeriodReport = findViewById(R.id.button8);
-
-        //report by Category (picture and description only)
-        editTextPeriodPD = findViewById(R.id.editTextText11);
-        btnGeneratePeriodReportPD = findViewById(R.id.button11);
-
-        //report for all collections
-        btnGenerateReport = findViewById(R.id.button10);
-
-        //report for all collections Picture and description only
-        btnGenerateReportPD = findViewById(R.id.button12);
+        editTextLotNumber = view.findViewById(R.id.editTextNumber);
+        btnGenerateLotReport = view.findViewById(R.id.button3);
+        editTextName = view.findViewById(R.id.editTextText2);
+        btnGenerateNameReport = view.findViewById(R.id.button5);
+        editTextCategory = view.findViewById(R.id.editTextText3);
+        btnGenerateCategoryReport = view.findViewById(R.id.button7);
+        editTextCategoryPD = view.findViewById(R.id.editTextText9);
+        btnGenerateCategoryReportPD = view.findViewById(R.id.button6);
+        editTextPeriod = view.findViewById(R.id.editTextText10);
+        btnGeneratePeriodReport = view.findViewById(R.id.button8);
+        editTextPeriodPD = view.findViewById(R.id.editTextText11);
+        btnGeneratePeriodReportPD = view.findViewById(R.id.button11);
+        btnGenerateReport = view.findViewById(R.id.button10);
+        btnGenerateReportPD = view.findViewById(R.id.button12);
 
         btnGenerateLotReport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +110,8 @@ public class ReportActivity extends AppCompatActivity {
                 generateReportAllPD();
             }
         });
+
+        return view;
     }
 
     private void generateReportByLotNumber(String lotNumber) {
@@ -174,6 +154,4 @@ public class ReportActivity extends AppCompatActivity {
         reportGenerator.generateReportAllPD();
     }
 }
-
-
 

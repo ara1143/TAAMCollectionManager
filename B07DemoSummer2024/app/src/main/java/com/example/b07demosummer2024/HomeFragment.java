@@ -9,42 +9,77 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
-    @Nullable
+    private RecyclerView recyclerView;
+    private recyclerAdapter recyclerAdapter;
+    private ArrayList<Collection> collectionList;
+
+    public static HomeFragment newInstance(ArrayList<Collection> collections) {
+        HomeFragment fragment = new HomeFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("collections", collections);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            collectionList = (ArrayList<Collection>) getArguments().getSerializable("collections");
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
 
-        Button buttonRecyclerView = view.findViewById(R.id.buttonRecyclerView);
-        Button buttonScroller = view.findViewById(R.id.buttonScroller);
-        Button buttonSpinner = view.findViewById(R.id.buttonSpinner);
-        Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        buttonRecyclerView.setOnClickListener(new View.OnClickListener() {
+        // Check if collectionList is not null before setting the adapter
+        if (collectionList != null) {
+            recyclerAdapter = new recyclerAdapter(collectionList);
+            recyclerView.setAdapter(recyclerAdapter);
+        }
+
+        Button adminButton = view.findViewById(R.id.button);
+        adminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new RecyclerViewFragment());
+                // Navigate to AdminFragment
+//                AdminFragment adminFragment = AdminFragment.newInstance(collectionList);
+//                loadFragment(adminFragment);
+                // loadFragment(new LoginFragment());
+                loadFragment(new LoginView());
             }
         });
 
-        buttonScroller.setOnClickListener(new View.OnClickListener() {
+        Button viewButton = view.findViewById(R.id.viewButton);
+        viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new ScrollerFragment());
-            }
-        });
+                List<Collection> selectedCollections = recyclerAdapter.getSelectedCollections();
+                // Pass the selected collections to the new fragment
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("selectedCollections", (Serializable) selectedCollections);
+                SelectedCollectionsFragment fragment = new SelectedCollectionsFragment();
+                fragment.setArguments(bundle);
 
-        buttonSpinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new SpinnerFragment());
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
-        });
-
-        buttonManageItems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { loadFragment(new ManageItemsFragment());}
         });
 
         return view;

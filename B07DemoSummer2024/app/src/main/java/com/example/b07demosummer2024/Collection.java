@@ -55,16 +55,16 @@ public class Collection {
     public String getDescription() {
         return description;
     }
-
+  
     public void setDescription(String description) {
-        this.description = description;
+       this.description = description; 
     }
 
-    public String getMediaUrl() {
+   public String getMediaUrl() {
         return mediaUrl;
-    }
+   }
 
-    public void setMediaUrl(String mediaUrl) {
+   public void setMediaUrl(String mediaUrl) {
         this.mediaUrl = mediaUrl;
-    }
+   }
 }
