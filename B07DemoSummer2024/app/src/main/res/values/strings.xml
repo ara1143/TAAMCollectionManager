@@ -11,8 +11,7 @@
     <string name="manage_items">Manage Items</string>
 
     <string-array name="categories_array">
-        <item>Books</item>
-        <item>Movies</item>
+        <item>collections</item>
     </string-array>
 
 

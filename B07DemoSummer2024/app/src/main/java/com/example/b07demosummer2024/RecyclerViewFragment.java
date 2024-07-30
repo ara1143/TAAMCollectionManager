@@ -1,6 +1,7 @@
 package com.example.b07demosummer2024;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import java.util.List;
 public class RecyclerViewFragment extends Fragment {
     private RecyclerView recyclerView;
     private ItemAdapter itemAdapter;
-    private List<Item> itemList;
+    private List<Collection> itemList;
     private Spinner spinnerCategory;
 
     private FirebaseDatabase db;
@@ -47,7 +48,7 @@ public class RecyclerViewFragment extends Fragment {
         itemAdapter = new ItemAdapter(itemList);
         recyclerView.setAdapter(itemAdapter);
 
-        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
+        db = FirebaseDatabase.getInstance("https://taamcollectionmanager-default-rtdb.firebaseio.com/");
 
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -66,20 +67,28 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     private void fetchItemsFromDatabase(String category) {
-        itemsRef = db.getReference("categories/" + category);
+        Log.d("Firebase", "Fetching data for category: " + category);
+        itemsRef = db.getReference("collections");
         itemsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("Firebase", "DataSnapshot received: " + dataSnapshot);
                 itemList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Item item = snapshot.getValue(Item.class);
-                    itemList.add(item);
+                    Collection collection = snapshot.getValue(Collection.class);
+                    if (collection != null) {
+                        Log.d("Firebase", "Item added: " + collection.getName());
+                        itemList.add(collection);
+                    } else {
+                        Log.e("Firebase", "Null collection object");
+                    }
                 }
                 itemAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Database error: " + databaseError.getMessage());
                 // Handle possible errors
             }
         });
