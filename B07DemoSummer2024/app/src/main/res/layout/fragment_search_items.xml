@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchItemsFragment">
+
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:id="@+id/searchNum"
+        app:iconifiedByDefault="false"
+        app:searchHintIcon="@null"
+        app:queryHint="Lot #"
+        android:focusable="false"
+        app:layout_constraintTop_toBottomOf="parent"
+        />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="136dp"
+        android:layout_marginEnd="12dp"
+        android:focusable="false"
+        app:iconifiedByDefault="false"
+        app:layout_constraintTop_toBottomOf="@+id/searchNum"
+        app:queryHint="Name"
+        app:searchHintIcon="@null" />
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="196dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:id="@+id/searchCategory"
+        app:iconifiedByDefault="false"
+        app:searchHintIcon="@null"
+        app:queryHint="Category"
+        android:focusable="false"
+        app:layout_constraintTop_toBottomOf="@+id/searchName"
+        />
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="256dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:id="@+id/searchPeriod"
+        app:iconifiedByDefault="false"
+        app:searchHintIcon="@null"
+        app:queryHint="Period"
+        android:focusable="false"
+        app:layout_constraintTop_toBottomOf="@+id/searchCategory"
+        />
+
+
+    <Button
+        android:id="@+id/resultButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="386dp"
+        android:layout_marginEnd="52dp"
+        android:text="Result"
+        app:layout_constraintEnd_toEndOf="@id/searchPeriod"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="316dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:id="@+id/keywordSearch"
+        app:iconifiedByDefault="false"
+        app:searchHintIcon="@null"
+        app:queryHint="Keyword Searching (optional)"
+        android:focusable="false"
+        app:layout_constraintTop_toBottomOf="@+id/resultButton"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="64dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="586dp"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/searchByCharacteristics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginEnd="56dp"
+        android:text="Searching"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="446dp"
+        android:layout_marginEnd="52dp"
+        android:text="Back"
+        />
+</FrameLayout>

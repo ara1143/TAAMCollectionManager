@@ -51,4 +51,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             //textViewMediaUrl = itemView.findViewById(R.id.textViewMediaUrl);
         }
     }
+
+
 }

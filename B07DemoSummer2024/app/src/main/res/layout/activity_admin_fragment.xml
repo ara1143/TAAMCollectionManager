@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="280dp"
@@ -53,7 +53,7 @@
         android:layout_marginStart="4dp"
         android:text="Add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button4" />
+        app:layout_constraintStart_toEndOf="@+id/searchButton" />
 
     <Button
         android:id="@+id/button13"

@@ -1,5 +1,6 @@
 package com.example.b07demosummer2024;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
     private ArrayList<com.example.b07demosummer2024.Collection> collectionList;
@@ -32,6 +34,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Collection collection = collectionList.get(position);
+        //Collection collection = collectionList.get(position);
         holder.name.setText(collection.getName());
         holder.category.setText("Category: " + collection.getCategory());
         holder.period.setText("Period: " + collection.getPeriod());
@@ -64,7 +67,46 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                 selectedCollections.remove(collection);
             }
         });
+
     }
+
+
+    public ArrayList<Collection> searchDataList(String [] searchInfo){
+
+        ArrayList<Collection> searchList = new ArrayList<Collection>();
+        for(Collection items: collectionList) { //this might cause issues
+            boolean validResult = true;
+            boolean validKeyword = false;
+            if(searchInfo[0].length() != 0){
+                validResult = items.getLotNumber().contains(searchInfo[0].toLowerCase());
+            }
+            if(searchInfo[1].length() != 0){
+                validResult = validResult
+                        && items.getName().toLowerCase().contains(searchInfo[1].toLowerCase());
+            }
+            if(searchInfo[2].length() != 0){
+                validResult = validResult
+                        && items.getCategory().toLowerCase().contains(searchInfo[2].toLowerCase());
+            }
+            if(searchInfo[3].length() != 0){
+                validResult = validResult
+                        && items.getPeriod().toLowerCase().contains(searchInfo[3].toLowerCase());
+            }
+            if(searchInfo[4].length() != 0){
+                validKeyword = items.getLotNumber().contains(searchInfo[4].toLowerCase())
+                        || items.getName().toLowerCase().contains(searchInfo[4].toLowerCase())
+                        || items.getCategory().toLowerCase().contains(searchInfo[4].toLowerCase())
+                        || items.getPeriod().toLowerCase().contains(searchInfo[4].toLowerCase());
+            }
+            if ((searchInfo[4].isEmpty() && validResult) || (validKeyword && validResult)) {
+                searchList.add(items);
+            }
+        }
+        return searchList;
+    }
+
+
+
 
     public ArrayList<Collection> getSelectedCollections() {
         return selectedCollections;
