@@ -72,16 +72,18 @@ public class SearchItemsFragment extends Fragment {
         SearchView searchName = view.findViewById(R.id.searchName);
         SearchView searchCategory = view.findViewById(R.id.searchCategory);
         SearchView searchPeriod = view.findViewById(R.id.searchPeriod);
+        SearchView keywordSearch = view.findViewById(R.id.keywordSearch);
         searchNum.clearFocus();
         searchName.clearFocus();
         searchCategory.clearFocus();
         searchPeriod.clearFocus();
-        String [] itemInfo = new String[4];
-        itemInfo[0] = ""; //make sure never have to deal with null.lowercase()
+        keywordSearch.clearFocus();
+        String [] itemInfo = new String[5];
+        itemInfo[0] = "";
         itemInfo[1] = "";
         itemInfo[2] = "";
         itemInfo[3] = "";
-
+        itemInfo[4] = "";
         searchNum.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             public boolean onQueryTextSubmit(String query){
                 return false;
@@ -129,25 +131,35 @@ public class SearchItemsFragment extends Fragment {
             }
         });
 
+        keywordSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+
+            public boolean onQueryTextSubmit(String query){
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText){
+                itemInfo[4] = newText;
+                return true;
+            }
+        });
+
 
         Button resultButton = view.findViewById(R.id.resultButton);
         resultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(recyclerAdapter == null){
-                    Log.i("my tag", "the recycler adapter is null");
-                }
-                else{
-
+                if(recyclerAdapter != null){
                     ArrayList<Collection> selectedCollections = recyclerAdapter.searchDataList(itemInfo);
-                    //HomeFragment fragment = HomeFragment.newInstance(selectedCollections);
                     SearchedCollectionsFragment fragment = SearchedCollectionsFragment.newInstance(selectedCollections);
                     loadFragment(fragment);
                 }
 
             }
         });
+
+
 
         Button backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {

@@ -76,6 +76,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         ArrayList<Collection> searchList = new ArrayList<Collection>();
         for(Collection items: collectionList) { //this might cause issues
             boolean validResult = true;
+            boolean validKeyword = false;
             if(searchInfo[0].length() != 0){
                 validResult = items.getLotNumber().contains(searchInfo[0].toLowerCase());
             }
@@ -91,12 +92,20 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                 validResult = validResult
                         && items.getPeriod().toLowerCase().contains(searchInfo[3].toLowerCase());
             }
-            if (validResult) {
+            if(searchInfo[4].length() != 0){
+                validKeyword = items.getLotNumber().contains(searchInfo[4].toLowerCase())
+                        || items.getName().toLowerCase().contains(searchInfo[4].toLowerCase())
+                        || items.getCategory().toLowerCase().contains(searchInfo[4].toLowerCase())
+                        || items.getPeriod().toLowerCase().contains(searchInfo[4].toLowerCase());
+            }
+            if ((searchInfo[4].isEmpty() && validResult) || (validKeyword && validResult)) {
                 searchList.add(items);
             }
         }
         return searchList;
     }
+
+
 
 
     public ArrayList<Collection> getSelectedCollections() {

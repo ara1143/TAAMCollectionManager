@@ -92,6 +92,14 @@ public class AdminFragment extends Fragment {
                                 .commit();
                     }
                 });
+
+                Button searchButton = view.findViewById(R.id.searchButton);
+                searchButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadFragment(SearchItemsFragment.newInstance(collectionList));
+                    }
+                });
             }
         });
 
