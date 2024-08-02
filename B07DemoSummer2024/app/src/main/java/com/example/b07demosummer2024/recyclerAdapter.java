@@ -89,7 +89,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
             name = view.findViewById(R.id.textViewName);
             category = view.findViewById(R.id.textViewCategory);
             period = view.findViewById(R.id.textViewPeriod);
-            lot = view.findViewById(R.id.textViewLotNumber);
+            lot = view.findViewById(R.id.textViewLot);
             description = view.findViewById(R.id.textViewDescription);
             imageView = view.findViewById(R.id.imageView);
             checkBox = view.findViewById(R.id.checkBox);
