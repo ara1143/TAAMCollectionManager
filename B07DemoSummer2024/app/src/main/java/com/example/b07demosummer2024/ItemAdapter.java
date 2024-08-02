@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
-    private List<Item> itemList;
+    private List<Collection> itemList;
 
-    public ItemAdapter(List<Item> itemList) {
+    public ItemAdapter(List<Collection> itemList) { 
         this.itemList = itemList;
     }
 
@@ -24,11 +24,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        Item item = itemList.get(position);
-        holder.textViewTitle.setText(item.getTitle());
-        holder.textViewAuthor.setText(item.getAuthor());
-        holder.textViewGenre.setText(item.getGenre());
-        holder.textViewDescription.setText(item.getDescription());
+        Collection collection = itemList.get(position);
+        holder.textViewName.setText(collection.getName());
+        holder.textViewLotNumber.setText(collection.getLotNumber());
+        holder.textViewCategory.setText(collection.getCategory());
+        holder.textViewPeriod.setText(collection.getPeriod());
+        holder.textViewDescription.setText(collection.getDescription());
+        holder.textViewMediaUrl.setText(collection.getMediaUrl());
     }
 
     @Override
@@ -37,14 +39,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle, textViewAuthor, textViewGenre, textViewDescription;
+        TextView textViewName, textViewLotNumber, textViewCategory, textViewPeriod, textViewDescription, textViewMediaUrl;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.textViewName);
-            textViewAuthor = itemView.findViewById(R.id.textViewCategory);
-            textViewGenre = itemView.findViewById(R.id.textViewPeriod);
-            textViewDescription = itemView.findViewById(R.id.textViewLot);
+            textViewName = itemView.findViewById(R.id.textViewName);
+            textViewLotNumber = itemView.findViewById(R.id.textViewLotNumber);
+            textViewCategory = itemView.findViewById(R.id.textViewCategory);
+            textViewPeriod = itemView.findViewById(R.id.textViewPeriod);
+            textViewDescription = itemView.findViewById(R.id.textViewDescription);
+            //textViewMediaUrl = itemView.findViewById(R.id.textViewMediaUrl);
         }
     }
 

@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewCategory" />
 
     <TextView
-        android:id="@+id/textViewLot"
+        android:id="@+id/textViewLotNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Lot #:"
@@ -55,7 +55,7 @@
         android:text="Description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLot" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewLotNumber" />
 
     <ImageView
         android:id="@+id/imageView"
