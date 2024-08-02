@@ -95,7 +95,7 @@ public class RemoveItemFragment extends Fragment {
                 int dltCounter = selectedCollections.size();
                 List<String> toDlt = new ArrayList<>();
                 for (int i = 0; i < dltCounter ; i++) {
-                    toDlt.add(selectedCollections.get(i).getName().toLowerCase());
+                    toDlt.add(selectedCollections.get(i).getName());
                 }
                     boolean itemFound = false;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
