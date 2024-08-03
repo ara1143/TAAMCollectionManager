@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SelectedCollectionsAdapter extends RecyclerView.Adapter<SelectedCollectionsAdapter.MyViewHolder> {
@@ -77,14 +76,11 @@ public class SelectedCollectionsAdapter extends RecyclerView.Adapter<SelectedCol
             name = view.findViewById(R.id.textViewName);
             category = view.findViewById(R.id.textViewCategory);
             period = view.findViewById(R.id.textViewPeriod);
-            lot = view.findViewById(R.id.textViewLot);
+            lot = view.findViewById(R.id.textViewLotNumber);
             description = view.findViewById(R.id.textViewDescription);
             imageView = view.findViewById(R.id.imageView);
             checkBox = view.findViewById(R.id.checkBox);
         }
     }
-
 }
-
-
 
