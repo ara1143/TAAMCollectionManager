@@ -84,5 +84,3 @@ public class SelectedCollectionsAdapter extends RecyclerView.Adapter<SelectedCol
     }
 }
 
-
-

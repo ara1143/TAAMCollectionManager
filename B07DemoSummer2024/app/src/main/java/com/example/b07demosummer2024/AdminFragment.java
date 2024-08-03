@@ -1,3 +1,4 @@
+
 package com.example.b07demosummer2024;
 
 import android.annotation.SuppressLint;
@@ -95,7 +96,14 @@ public class AdminFragment extends Fragment {
                     }
                 });
 
-
+                Button searchButton = view.findViewById(R.id.searchButton);
+                searchButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadFragment(SearchItemsFragment.newInstance(collectionList));
+                    }
+                });
+              
                 Button removeButton = view.findViewById(R.id.button13);
                 removeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -193,3 +201,4 @@ public class AdminFragment extends Fragment {
         transaction.commit();
     }
 }
+
