@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -104,7 +106,14 @@ public class AddingItemFragment extends Fragment {
                     } else {
                         // If no item with the same lot number exists, add the new item to the database
                         Collection zol = new Collection(name, lotnumber, category, period, desc, URL);
-                        itemdbref.push().setValue(zol);
+                        itemdbref.push().setValue(zol).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()){
+                                Toast.makeText(getContext(), "Item added", Toast.LENGTH_SHORT).show();
+                                loadFragment(new AdminFragment());
+                            }else{
+                                Toast.makeText(getContext(), "Failed to add item", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
                 @Override
@@ -115,5 +124,11 @@ public class AddingItemFragment extends Fragment {
         }
     }
 
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 }
