@@ -104,6 +104,14 @@ public class AdminFragment extends Fragment {
                     }
                 });
               
+                Button addButton = view.findViewById(R.id.button9);
+                addButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        loadFragment(new AddingItemFragment());
+                    }
+                });
+
                 Button removeButton = view.findViewById(R.id.button13);
                 removeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
