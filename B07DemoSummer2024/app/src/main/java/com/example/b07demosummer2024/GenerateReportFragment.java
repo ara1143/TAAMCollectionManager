@@ -111,6 +111,14 @@ public class GenerateReportFragment extends Fragment {
             }
         });
 
+        Button backButton = view.findViewById(R.id.button4);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
+
         return view;
     }
 
