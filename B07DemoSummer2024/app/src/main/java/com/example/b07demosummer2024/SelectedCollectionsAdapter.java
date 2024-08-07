@@ -1,11 +1,13 @@
 package com.example.b07demosummer2024;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,7 +52,20 @@ public class SelectedCollectionsAdapter extends RecyclerView.Adapter<SelectedCol
         }
 
         if (collection.getMediaUrl() != null && !collection.getMediaUrl().isEmpty()) {
-            Picasso.get().load(collection.getMediaUrl()).into(holder.imageView);
+            if (isVideoUrl(collection.getMediaUrl())) {
+                holder.imageView.setVisibility(View.GONE);
+                holder.videoView.setVisibility(View.VISIBLE);
+                holder.videoView.setVideoURI(Uri.parse(collection.getMediaUrl()));
+                holder.videoView.setOnPreparedListener(mp -> mp.setLooping(true));
+                holder.videoView.start();
+            } else {
+                holder.videoView.setVisibility(View.GONE);
+                holder.imageView.setVisibility(View.VISIBLE);
+                Picasso.get().load(collection.getMediaUrl()).into(holder.imageView);
+            }
+        } else {
+            holder.videoView.setVisibility(View.GONE);
+            holder.imageView.setVisibility(View.GONE);
         }
 
         // Hide the checkbox
@@ -69,6 +84,7 @@ public class SelectedCollectionsAdapter extends RecyclerView.Adapter<SelectedCol
         private TextView lot;
         private TextView description;
         private ImageView imageView;
+        private VideoView videoView;
         private CheckBox checkBox;
 
         public MyViewHolder(final View view) {
@@ -79,8 +95,20 @@ public class SelectedCollectionsAdapter extends RecyclerView.Adapter<SelectedCol
             lot = view.findViewById(R.id.textViewLotNumber);
             description = view.findViewById(R.id.textViewDescription);
             imageView = view.findViewById(R.id.imageView);
+            videoView = view.findViewById(R.id.videoView);
             checkBox = view.findViewById(R.id.checkBox);
         }
     }
+
+    private boolean isVideoUrl(String url) {
+        String lowerUrl = url.toLowerCase();
+        if (lowerUrl.contains("?")) {
+            lowerUrl = lowerUrl.substring(0, lowerUrl.indexOf("?"));
+        }
+        return lowerUrl.endsWith(".mp4") || lowerUrl.endsWith(".3gp") ||
+                lowerUrl.endsWith(".mkv") || lowerUrl.endsWith(".webm") ||
+                lowerUrl.endsWith(".avi");
+    }
 }
+
 
