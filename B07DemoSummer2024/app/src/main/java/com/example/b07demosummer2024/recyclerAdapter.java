@@ -1,5 +1,6 @@
 package com.example.b07demosummer2024;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
+
 import com.example.b07demosummer2024.Collection;
 import com.squareup.picasso.Picasso;
 
@@ -34,28 +37,37 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Collection collection = collectionList.get(position);
-        //Collection collection = collectionList.get(position);
         holder.name.setText(collection.getName());
         holder.category.setText("Category: " + collection.getCategory());
         holder.period.setText("Period: " + collection.getPeriod());
         holder.lot.setText("Lot #: " + collection.getLotNumber());
         holder.description.setText("Description: " + collection.getDescription());
-        //holder.imageURL.setText(collection.getMediaUrl());
 
-        // Adjust text size based on description length
         String description = collection.getDescription();
         if (description != null) {
             if (description.length() <= 50) {
-                holder.description.setTextSize(16); // Set larger text size for short descriptions
+                holder.description.setTextSize(16);
             } else if (description.length() <= 100) {
-                holder.description.setTextSize(14); // Set medium text size for medium descriptions
+                holder.description.setTextSize(14);
             } else {
-                holder.description.setTextSize(12); // Set smaller text size for long descriptions
+                holder.description.setTextSize(12);
             }
         }
 
         if (collection.getMediaUrl() != null && !collection.getMediaUrl().isEmpty()) {
-            Picasso.get().load(collection.getMediaUrl()).into(holder.imageView);
+            if (isVideoUrl(collection.getMediaUrl())) {
+                holder.imageView.setVisibility(View.GONE);
+                holder.videoView.setVisibility(View.VISIBLE);
+                holder.videoView.setVideoURI(Uri.parse(collection.getMediaUrl()));
+                holder.videoView.setOnPreparedListener(mp -> {
+                    mp.setLooping(true);
+                    holder.videoView.start();
+                });
+            } else {
+                holder.videoView.setVisibility(View.GONE);
+                holder.imageView.setVisibility(View.VISIBLE);
+                Picasso.get().load(collection.getMediaUrl()).into(holder.imageView);
+            }
         }
 
         holder.checkBox.setOnCheckedChangeListener(null);
@@ -67,8 +79,19 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                 selectedCollections.remove(collection);
             }
         });
-
     }
+
+    private boolean isVideoUrl(String url) {
+        String lowerUrl = url.toLowerCase();
+        if (lowerUrl.contains("?")) {
+            lowerUrl = lowerUrl.substring(0, lowerUrl.indexOf("?"));
+        }
+        return lowerUrl.endsWith(".mp4") || lowerUrl.endsWith(".3gp") ||
+                lowerUrl.endsWith(".mkv") || lowerUrl.endsWith(".webm") ||
+                lowerUrl.endsWith(".avi");
+    }
+
+
 
 
     public ArrayList<Collection> searchDataList(String [] searchInfo){
@@ -124,6 +147,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         private TextView lot;
         private TextView description;
         private ImageView imageView;
+        private VideoView videoView;
         private CheckBox checkBox;
 
         public MyViewHolder(final View view){
@@ -134,7 +158,9 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
             lot = view.findViewById(R.id.textViewLotNumber);
             description = view.findViewById(R.id.textViewDescription);
             imageView = view.findViewById(R.id.imageView);
+            videoView = view.findViewById(R.id.videoView);
             checkBox = view.findViewById(R.id.checkBox);
         }
     }
+
 }
